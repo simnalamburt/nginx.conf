@@ -1,5 +1,5 @@
 ## GitLab
-## Maintainer: @randx
+## Contributors: randx, yin8086, sashkab, orkoden, axilleas, bbodenmiller
 ##
 ## Lines starting with two hashes (##) are comments with information.
 ## Lines starting with one hash (#) are configuration parameters that can be uncommented.
@@ -26,6 +26,7 @@
 ##         configuration         ##
 ###################################
 ##
+## See installation.md#using-https for additional HTTPS configuration details.
 
 upstream gitlab {
   server unix:/home/git/gitlab/tmp/sockets/gitlab.socket fail_timeout=0;
@@ -33,14 +34,17 @@ upstream gitlab {
 
 ## Normal HTTP host
 server {
-# listen *:80 default_server;
-  server_name git.hyeon.me; ## Replace this with something like gitlab.example.com
+  listen 0.0.0.0:80 default_server;
+  listen [::]:80 default_server;
+  server_name git.hyeon.me;
   server_tokens off; ## Don't show the nginx version number, a security best practice
   root /home/git/gitlab/public;
 
   ## Increase this if you want to upload large attachments
   ## Or if you want to accept large git objects over http
   client_max_body_size 20m;
+
+  ## See app/controllers/application_controller.rb for headers set
 
   ## Individual nginx logs for this GitLab vhost
   access_log  /var/log/nginx/gitlab_access.log;
