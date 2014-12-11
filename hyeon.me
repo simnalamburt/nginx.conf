@@ -1,0 +1,14 @@
+server {
+  server_name hyeon.me;
+  root /home/simnalamburt/hyeonme;
+}
+
+server {
+  server_name i.hyeon.me;
+  root /home/simnalamburt/i;
+}
+
+server {
+  server_name *.hyeon.me;
+  return 301 $scheme://hyeon.me$request_uri;
+}

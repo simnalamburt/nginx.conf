@@ -1,0 +1,37 @@
+upstream snucheat {
+  server localhost:3000;
+}
+
+server {
+  server_name snu.jokbo.me;
+
+  location / {
+    proxy_pass http://snucheat;
+  }
+
+  location /static/files/ {
+    proxy_pass http://snucheat$request_uri;
+
+    proxy_hide_header Content-Type;
+    add_header Content-Type "application/octet-stream";
+    add_header Content-Disposition "attachment";
+    add_header Content-Transfer-Encoding "binary";
+  }
+}
+
+server {
+  server_name jokbo.me;
+  return 301 $scheme://snu.jokbo.me$request_uri;
+}
+server {
+  server_name *.jokbo.me;
+  return 301 $scheme://snu.jokbo.me$request_uri;
+}
+server {
+  server_name snucheat.hyeon.me;
+  return 301 $scheme://snu.jokbo.me$request_uri;
+}
+server {
+  server_name *.snucheat.hyeon.me;
+  return 301 $scheme://snu.jokbo.me$request_uri;
+}
