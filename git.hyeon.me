@@ -34,8 +34,8 @@ upstream gitlab {
 
 ## Normal HTTP host
 server {
-  listen 0.0.0.0:80 default_server;
-  listen [::]:80 default_server;
+# listen 0.0.0.0:80 default_server;
+# listen [::]:80 default_server;
   server_name git.hyeon.me;
   server_tokens off; ## Don't show the nginx version number, a security best practice
   root /home/git/gitlab/public;
