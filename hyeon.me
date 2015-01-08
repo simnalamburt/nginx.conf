@@ -9,6 +9,20 @@ server {
 }
 
 server {
+  server_name memo.hyeon.me;
+  server_tokens off;
+
+  location / {
+    root /home/simnalamburt/memo/public;
+    gzip_static on;
+  }
+
+  location /memos {
+    proxy_pass http://localhost:4567;
+  }
+}
+
+server {
   server_name *.hyeon.me;
   return 301 $scheme://hyeon.me$request_uri;
 }
