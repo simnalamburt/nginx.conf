@@ -28,6 +28,14 @@ server {
 }
 
 server {
+  server_name swpp.hyeon.me;
+
+  location / {
+    proxy_pass http://localhost:9876;
+  }
+}
+
+server {
   server_name *.hyeon.me;
   return 301 $scheme://hyeon.me$request_uri;
 }
