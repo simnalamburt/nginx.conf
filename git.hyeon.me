@@ -1,14 +1,12 @@
+# This file is managed by gitlab-ctl. Manual changes will be
+# erased! To change the contents below, edit /etc/gitlab/gitlab.rb
+# and run `sudo gitlab-ctl reconfigure`.
+
 ## GitLab
+## Modified from https://gitlab.com/gitlab-org/gitlab-ce/blob/master/lib/support/nginx/gitlab-ssl & https://gitlab.com/gitlab-org/gitlab-ce/blob/master/lib/support/nginx/gitlab
 ##
 ## Lines starting with two hashes (##) are comments with information.
 ## Lines starting with one hash (#) are configuration parameters that can be uncommented.
-##
-##################################
-##        CONTRIBUTING          ##
-##################################
-##
-## If you change this file in a Merge Request, please also create
-## a Merge Request on https://gitlab.com/gitlab-org/omnibus-gitlab/merge_requests
 ##
 ##################################
 ##        CHUNKED TRANSFER      ##
@@ -31,30 +29,22 @@
 ###################################
 ##         configuration         ##
 ###################################
-##
-## See installation.md#using-https for additional HTTPS configuration details.
 
 upstream gitlab {
-  server unix:/home/git/gitlab/tmp/sockets/gitlab.socket fail_timeout=0;
+  server unix:/var/opt/gitlab/gitlab-rails/sockets/gitlab.socket fail_timeout=0;
 }
 
-## Normal HTTP host
+
 server {
-  ## Either remove "default_server" from the listen line below,
-  ## or delete the /etc/nginx/sites-enabled/default file. This will cause gitlab
-  ## to be served if you visit any address that your server responds to, eg.
-  ## the ip address of the server (http://x.x.x.x/)n 0.0.0.0:80 default_server;
-  listen 0.0.0.0:80;
-  listen [::]:80;
+  listen *:80;
   server_name git.hyeon.me;
   server_tokens off; ## Don't show the nginx version number, a security best practice
-  root /home/git/gitlab/public;
+  root /opt/gitlab/embedded/service/gitlab-rails/public;
 
   ## Increase this if you want to upload large attachments
   ## Or if you want to accept large git objects over http
-  client_max_body_size 20m;
+  client_max_body_size 250m;
 
-  ## See app/controllers/application_controller.rb for headers set
 
   ## Individual nginx logs for this GitLab vhost
   access_log  /var/log/nginx/gitlab_access.log;
@@ -66,11 +56,10 @@ server {
     try_files $uri $uri/index.html $uri.html @gitlab;
   }
 
-  ## We route uploads through GitLab to prevent XSS and enforce access control.
   location /uploads/ {
     ## If you use HTTPS make sure you disable gzip compression
     ## to be safe against BREACH attack.
-    # gzip off;
+
 
     ## https://github.com/gitlabhq/gitlabhq/issues/694
     ## Some requests take more than 30 seconds.
@@ -92,7 +81,7 @@ server {
   location @gitlab {
     ## If you use HTTPS make sure you disable gzip compression
     ## to be safe against BREACH attack.
-    # gzip off;
+
 
     ## https://github.com/gitlabhq/gitlabhq/issues/694
     ## Some requests take more than 30 seconds.
@@ -115,7 +104,7 @@ server {
   ## See config/application.rb under "Relative url support" for the list of
   ## other files that need to be changed for relative url support
   location ~ ^/(assets)/ {
-    root /home/git/gitlab/public;
+    root /opt/gitlab/embedded/service/gitlab-rails/public;
     gzip_static on; # to serve pre-gzipped version
     expires max;
     add_header Cache-Control public;
