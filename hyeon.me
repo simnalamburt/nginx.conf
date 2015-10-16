@@ -73,6 +73,36 @@ server {
   }
 }
 
+#
+# txt.hyeon.me
+#
+upstream txt {
+  server unix:/home/simnalamburt/txt/tmp/socket fail_timeout=0;
+}
+
+server {
+  server_name txt.hyeon.me;
+  root /home/simnalamburt/txt/public;
+
+  location / {
+    try_files $uri @txt;
+  }
+
+  location @txt {
+    proxy_read_timeout      300;
+    proxy_connect_timeout   300;
+    proxy_redirect          off;
+
+    proxy_set_header    Host                $http_host;
+    proxy_set_header    X-Real-IP           $remote_addr;
+    proxy_set_header    X-Forwarded-For     $proxy_add_x_forwarded_for;
+    proxy_set_header    X-Forwarded-Proto   $scheme;
+    proxy_set_header    X-Frame-Options     SAMEORIGIN;
+
+    proxy_pass http://txt;
+  }
+}
+
 server {
   server_name *.hyeon.me;
   return 301 $scheme://hyeon.me$request_uri;
