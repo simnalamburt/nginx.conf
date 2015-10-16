@@ -101,6 +101,13 @@ server {
 
     proxy_pass http://txt;
   }
+
+  location ~ ^/(raw)/ {
+    root /home/simnalamburt/txt/public;
+    gzip_static on; # to serve pre-gzipped version
+    expires max;
+    add_header Cache-Control public;
+  }
 }
 
 server {
