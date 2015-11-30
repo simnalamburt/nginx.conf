@@ -18,12 +18,12 @@ server {
 # kollus.hyeon.me
 #
 upstream kollus {
-  server unix:/home/simnalamburt/kollus/tmp/socket fail_timeout=0;
+  server unix:/home/simnalamburt/services/kollus/tmp/socket fail_timeout=0;
 }
 
 server {
   server_name kollus.hyeon.me;
-  root /home/simnalamburt/kollus/kollus-ruby/sample/public;
+  root /home/simnalamburt/services/kollus/kollus-ruby/sample/public;
 
   location / {
     try_files $uri @kollus;
