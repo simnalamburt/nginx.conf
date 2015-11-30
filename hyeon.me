@@ -77,12 +77,12 @@ server {
 # txt.hyeon.me
 #
 upstream txt {
-  server unix:/home/simnalamburt/txt/tmp/socket fail_timeout=0;
+  server unix:/home/simnalamburt/services/txt/tmp/socket fail_timeout=0;
 }
 
 server {
   server_name txt.hyeon.me;
-  root /home/simnalamburt/txt/public;
+  root /home/simnalamburt/services/txt/public;
 
   location / {
     try_files $uri @txt;
@@ -103,7 +103,7 @@ server {
   }
 
   location ~ ^/(raw)/ {
-    root /home/simnalamburt/txt/public;
+    root /home/simnalamburt/services/txt/public;
     gzip_static on; # to serve pre-gzipped version
     expires max;
     add_header Cache-Control public;
