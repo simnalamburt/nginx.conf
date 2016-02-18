@@ -15,37 +15,6 @@ server {
 
 
 #
-# kollus.hyeon.me
-#
-upstream kollus {
-  server unix:/home/simnalamburt/services/kollus/tmp/socket fail_timeout=0;
-}
-
-server {
-  server_name kollus.hyeon.me;
-  root /home/simnalamburt/services/kollus/kollus-ruby/sample/public;
-
-  location / {
-    try_files $uri @kollus;
-  }
-
-  location @kollus {
-    proxy_read_timeout      300;
-    proxy_connect_timeout   300;
-    proxy_redirect          off;
-
-    proxy_set_header    Host                $http_host;
-    proxy_set_header    X-Real-IP           $remote_addr;
-    proxy_set_header    X-Forwarded-For     $proxy_add_x_forwarded_for;
-    proxy_set_header    X-Forwarded-Proto   $scheme;
-    proxy_set_header    X-Frame-Options     SAMEORIGIN;
-
-    proxy_pass http://kollus;
-  }
-}
-
-
-#
 # random.hyeon.me
 #
 upstream random {
