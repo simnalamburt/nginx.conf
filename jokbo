@@ -1,3 +1,4 @@
+# vim: ft=nginx
 upstream snucheat {
   server localhost:3000;
 }
