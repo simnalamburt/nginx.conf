@@ -4,9 +4,8 @@ Recognizing [Kerchhoffs's principle][k], I hereby publish my own nginx
 configuration files.
 
 ```bash
-# Install
-sudo ln -sf "$PWD/nginx.conf" /etc/nginx/
-sudo ln -sf "$PWD/sites" /etc/nginx/
+sudo ln -sf "$PWD/hyeonme.conf" /etc/nginx/nginx.conf
+sudo ln -sf "$PWD/hyeonme" /etc/nginx/sites
 
 # Test if everything's alright
 sudo nginx -t -c /etc/nginx/nginx.conf
