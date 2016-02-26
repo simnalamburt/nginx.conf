@@ -6,7 +6,7 @@ configuration files.
 ```bash
 # Install
 sudo ln -sf "$PWD/nginx.conf" /etc/nginx/
-sudo ln -s "$PWD/sites" /etc/nginx/
+sudo ln -sf "$PWD/sites" /etc/nginx/
 
 # Test if everything's alright
 sudo nginx -t -c /etc/nginx/nginx.conf
