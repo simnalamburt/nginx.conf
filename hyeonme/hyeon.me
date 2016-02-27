@@ -1,17 +1,17 @@
 # vim: ft=nginx
 server {
-  server_name hyeon.me;
-  root /home/simnalamburt/services/hyeonme;
+    server_name hyeon.me;
+    root /home/simnalamburt/services/hyeonme;
 }
 
 server {
-  server_name saja.hyeon.me;
-  root /home/simnalamburt/services/saja;
+    server_name saja.hyeon.me;
+    root /home/simnalamburt/services/saja;
 }
 
 server {
-  server_name i.hyeon.me;
-  root /home/simnalamburt/i;
+    server_name i.hyeon.me;
+    root /home/simnalamburt/i;
 }
 
 
@@ -19,29 +19,29 @@ server {
 # random.hyeon.me
 #
 upstream random {
-  server unix:/home/simnalamburt/services/random/tmp/socket fail_timeout=0;
+    server unix:/home/simnalamburt/services/random/tmp/socket fail_timeout=0;
 }
 
 server {
-  server_name random.hyeon.me;
+    server_name random.hyeon.me;
 
-  location / {
-    try_files $uri @random;
-  }
+    location / {
+        try_files $uri @random;
+    }
 
-  location @random {
-    proxy_read_timeout      300;
-    proxy_connect_timeout   300;
-    proxy_redirect          off;
+    location @random {
+        proxy_read_timeout      300;
+        proxy_connect_timeout   300;
+        proxy_redirect          off;
 
-    proxy_set_header    Host                $http_host;
-    proxy_set_header    X-Real-IP           $remote_addr;
-    proxy_set_header    X-Forwarded-For     $proxy_add_x_forwarded_for;
-    proxy_set_header    X-Forwarded-Proto   $scheme;
-    proxy_set_header    X-Frame-Options     SAMEORIGIN;
+        proxy_set_header    Host                $http_host;
+        proxy_set_header    X-Real-IP           $remote_addr;
+        proxy_set_header    X-Forwarded-For     $proxy_add_x_forwarded_for;
+        proxy_set_header    X-Forwarded-Proto   $scheme;
+        proxy_set_header    X-Frame-Options     SAMEORIGIN;
 
-    proxy_pass http://random;
-  }
+        proxy_pass http://random;
+    }
 }
 
 
@@ -49,37 +49,37 @@ server {
 # txt.hyeon.me
 #
 upstream txt {
-  server unix:/home/simnalamburt/services/txt/tmp/socket fail_timeout=0;
+    server unix:/home/simnalamburt/services/txt/tmp/socket fail_timeout=0;
 }
 
 server {
-  server_name txt.hyeon.me;
-  root /home/simnalamburt/services/txt/public;
-
-  location / {
-    try_files $uri @txt;
-  }
-
-  location @txt {
-    proxy_read_timeout      300;
-    proxy_connect_timeout   300;
-    proxy_redirect          off;
-
-    proxy_set_header    Host                $http_host;
-    proxy_set_header    X-Real-IP           $remote_addr;
-    proxy_set_header    X-Forwarded-For     $proxy_add_x_forwarded_for;
-    proxy_set_header    X-Forwarded-Proto   $scheme;
-    proxy_set_header    X-Frame-Options     SAMEORIGIN;
-
-    proxy_pass http://txt;
-  }
-
-  location ~ ^/(raw)/ {
+    server_name txt.hyeon.me;
     root /home/simnalamburt/services/txt/public;
-    gzip_static on; # to serve pre-gzipped version
-    expires max;
-    add_header Cache-Control public;
-  }
+
+    location / {
+        try_files $uri @txt;
+    }
+
+    location @txt {
+        proxy_read_timeout      300;
+        proxy_connect_timeout   300;
+        proxy_redirect          off;
+
+        proxy_set_header    Host                $http_host;
+        proxy_set_header    X-Real-IP           $remote_addr;
+        proxy_set_header    X-Forwarded-For     $proxy_add_x_forwarded_for;
+        proxy_set_header    X-Forwarded-Proto   $scheme;
+        proxy_set_header    X-Frame-Options     SAMEORIGIN;
+
+        proxy_pass http://txt;
+    }
+
+    location ~ ^/(raw)/ {
+        root /home/simnalamburt/services/txt/public;
+        gzip_static on; # to serve pre-gzipped version
+            expires max;
+        add_header Cache-Control public;
+    }
 }
 
 
@@ -87,25 +87,25 @@ server {
 # torrent.hyeon.me
 #
 server {
-  server_name torrent.hyeon.me;
+    server_name torrent.hyeon.me;
 
-  location / {
-    try_files $uri @torrent;
-  }
+    location / {
+        try_files $uri @torrent;
+    }
 
-  location @torrent {
-    proxy_read_timeout      300;
-    proxy_connect_timeout   300;
-    proxy_redirect          off;
+    location @torrent {
+        proxy_read_timeout      300;
+        proxy_connect_timeout   300;
+        proxy_redirect          off;
 
-    proxy_set_header    Host                $http_host;
-    proxy_set_header    X-Real-IP           $remote_addr;
-    proxy_set_header    X-Forwarded-For     $proxy_add_x_forwarded_for;
-    proxy_set_header    X-Forwarded-Proto   $scheme;
-    proxy_set_header    X-Frame-Options     SAMEORIGIN;
+        proxy_set_header    Host                $http_host;
+        proxy_set_header    X-Real-IP           $remote_addr;
+        proxy_set_header    X-Forwarded-For     $proxy_add_x_forwarded_for;
+        proxy_set_header    X-Forwarded-Proto   $scheme;
+        proxy_set_header    X-Frame-Options     SAMEORIGIN;
 
-    proxy_pass http://127.0.0.1:8112;
-  }
+        proxy_pass http://127.0.0.1:8112;
+    }
 }
 
 
@@ -113,6 +113,6 @@ server {
 # Catch everything else
 #
 server {
-  server_name *.hyeon.me;
-  return 301 $scheme://hyeon.me$request_uri;
+    server_name *.hyeon.me;
+    return 301 $scheme://hyeon.me$request_uri;
 }
