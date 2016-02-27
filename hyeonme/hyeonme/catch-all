@@ -1,0 +1,8 @@
+# vim: ft=nginx
+server {
+  listen 80 default_server;
+  server_name _;
+  server_name_in_redirect off;
+
+  return 301 $scheme://hyeon.me$request_uri;
+}
