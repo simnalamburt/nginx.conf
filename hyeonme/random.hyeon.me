@@ -1,0 +1,32 @@
+# vim: ft=nginx
+upstream random {
+    server unix:/home/simnalamburt/services/random/tmp/socket fail_timeout=0;
+}
+
+server {
+    listen 443 ssl;
+    server_name random.hyeon.me;
+
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_certificate /etc/letsencrypt/live/i.hyeon.me/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/i.hyeon.me/privkey.pem;
+    ssl_trusted_certificate /etc/letsencrypt/live/i.hyeon.me/chain.pem;
+
+    location / {
+        try_files $uri @random;
+    }
+
+    location @random {
+        proxy_read_timeout      300;
+        proxy_connect_timeout   300;
+        proxy_redirect          off;
+
+        proxy_set_header    Host                $http_host;
+        proxy_set_header    X-Real-IP           $remote_addr;
+        proxy_set_header    X-Forwarded-For     $proxy_add_x_forwarded_for;
+        proxy_set_header    X-Forwarded-Proto   $scheme;
+        proxy_set_header    X-Frame-Options     SAMEORIGIN;
+
+        proxy_pass http://random;
+    }
+}
