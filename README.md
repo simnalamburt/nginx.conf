@@ -5,7 +5,7 @@ configuration files.
 
 ```bash
 # Install
-sudo ln -sf "$PWD/nginx.conf" /etc/nginx/
+sudo ln -sf "$PWD/kuma.conf" /etc/nginx/nginx.conf
 sudo ln -sf "$PWD/options-ssl-nginx.conf" /etc/letsencrypt/
 
 # Test if everything's alright
