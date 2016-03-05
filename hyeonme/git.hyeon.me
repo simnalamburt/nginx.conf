@@ -40,11 +40,3 @@ server {
         proxy_pass http://gitlab-workhorse;
     }
 }
-
-# Force use HTTPS
-server {
-    server_name git.hyeon.me;
-    return 301 https://$http_host$request_uri;
-    access_log /var/log/nginx/gitlab_access.log;
-    error_log /var/log/nginx/gitlab_error.log;
-}
