@@ -16,6 +16,8 @@ sudo ln -sf "$PWD/options-ssl-nginx.conf" /etc/letsencrypt/
 sudo nginx -t -c /etc/nginx/nginx.conf
 ```
 
-Reference: http://nginx.org/en/docs/
+##### References
+- http://nginx.org/en/docs/
+- https://github.com/h5bp/server-configs-nginx
 
 [k]: https://en.wikipedia.org/wiki/Kerckhoffs%27s_principle
