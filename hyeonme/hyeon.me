@@ -13,7 +13,4 @@ server {
     root /home/simnalamburt/services/hyeon.me/public;
     location /build        { expires 5m; add_header Cache-Control "public"; }
     location /build/static { expires 1M; add_header Cache-Control "public"; }
-
-    # sake nomu?
-    location /sake { alias /home/simnalamburt/services/sake; }
 }
