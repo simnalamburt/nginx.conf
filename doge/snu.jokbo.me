@@ -1,5 +1,5 @@
 # vim: ft=nginx
-upstream snucheat {
+upstream snujokbo {
     server localhost:3000;
 }
 
@@ -27,7 +27,7 @@ server {
         proxy_set_header    X-Forwarded-Proto   $scheme;
         proxy_set_header    X-Frame-Options     SAMEORIGIN;
 
-        proxy_pass http://snucheat;
+        proxy_pass http://snujokbo;
     }
 }
 
