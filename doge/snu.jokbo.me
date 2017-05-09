@@ -1,8 +1,5 @@
 # vim: ft=nginx
-upstream snujokbo {
-    server localhost:3000;
-}
-
+upstream snujokbo { server localhost:3000; }
 server {
     listen 443 ssl http2;
     listen [::]:443 ssl http2;
@@ -30,13 +27,8 @@ server {
         proxy_pass http://snujokbo;
     }
 }
-
-# Legacy URLs
 server {
-    server_name jokbo.me;
-    return 301 https://snu.jokbo.me$request_uri;
-}
-server {
-    server_name *.jokbo.me;
+    # Legacy URLs
+    server_name jokbo.me *.jokbo.me;
     return 301 https://snu.jokbo.me$request_uri;
 }
