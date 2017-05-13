@@ -19,5 +19,6 @@ sudo nginx -t -c /etc/nginx/nginx.conf
 ##### References
 - http://nginx.org/en/docs/
 - https://github.com/h5bp/server-configs-nginx
+- https://github.com/yandex/gixy
 
 [k]: https://en.wikipedia.org/wiki/Kerckhoffs%27s_principle
