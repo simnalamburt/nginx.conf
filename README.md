@@ -1,18 +1,16 @@
+> **WARNING**: This project is no longer actively maintained. I have changed
+> my personal homepage's web server into [Caddy](https://caddyserver.com).
+
 nginx.conf
 ========
-Recognizing [Kerchhoffs's principle][k], I hereby publish my own nginx
+Recognizing [Kerchhoffs's principle], I hereby publish my own nginx
 configuration files.
 
 ```bash
-# hyeon.me
-sudo ln -sf "$PWD/hyeonme.conf" /etc/nginx/nginx.conf
-sudo ln -sf "$PWD/hyeonme" /etc/nginx/sites
-sudo ln -sf "$PWD/options-ssl-nginx.conf" /etc/letsencrypt/
-# kuma.hyeon.me
-sudo ln -sf "$PWD/kuma.conf" /etc/nginx/nginx.conf
+sudo ln -sf "$PWD/nginx.conf" /etc/nginx/
 sudo ln -sf "$PWD/options-ssl-nginx.conf" /etc/letsencrypt/
 
-# Test if everything's alright
+# Test if everything is alright
 sudo nginx -t -c /etc/nginx/nginx.conf
 ```
 
@@ -21,4 +19,4 @@ sudo nginx -t -c /etc/nginx/nginx.conf
 - https://github.com/h5bp/server-configs-nginx
 - https://github.com/yandex/gixy
 
-[k]: https://en.wikipedia.org/wiki/Kerckhoffs%27s_principle
+[Kerchhoffs's principle]: https://en.wikipedia.org/wiki/Kerckhoffs%27s_principle
